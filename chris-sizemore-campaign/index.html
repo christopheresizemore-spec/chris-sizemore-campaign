@@ -1,0 +1,187 @@
+<!--
+Chris Sizemore - Campaign Site
+Single-file static site for GitHub Pages
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chris Sizemore for County Commissioner</title>
+  <meta name="description" content="Chris Sizemore for County Commissioner District 2 — Rabun County, GA">
+  <style>
+    :root{
+      --primary:#1f5a3a; /* deep green */
+      --accent:#2b74a8;  /* lake blue */
+      --muted:#6b6b6b;
+      --bg:#ffffff;
+      --card-bg:#fbfbfb;
+      --radius:12px;
+      --max-width:1000px;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#111;line-height:1.5}
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:24px}
+    header{background:linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('') center/cover no-repeat; border-radius:16px; color:white; padding:48px 24px; margin-bottom:20px}
+    header .hero-grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:center}
+    header h1{margin:0;font-size:28px}
+    header p.lead{margin:8px 0 16px;font-size:18px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:600}
+    .btn.alt{background:transparent;color:white;border:2px solid rgba(255,255,255,0.85)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .card{background:var(--card-bg);padding:18px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .muted{color:var(--muted)}
+    section{margin:18px 0}
+    h2{margin:0 0 10px}
+    .issues{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .issue{padding:12px;background:#fff;border-radius:10px;border:1px solid #eee}
+    .issue h3{margin:0;font-size:16px}
+    form{display:grid;gap:8px}
+    input,textarea,select{padding:10px;border-radius:8px;border:1px solid #ddd}
+    button[type=submit]{background:var(--primary);color:white;border:none;padding:10px 12px;border-radius:8px}
+    footer{margin-top:30px;padding:18px;background:#fafafa;border-radius:12px;text-align:center;color:var(--muted)}
+    @media(min-width:720px){header .hero-grid{grid-template-columns:2fr 1fr} header h1{font-size:36px}}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+
+<script>
+const CONFIG = {
+  name: "Chris Sizemore",
+  role: "Candidate — District 2 County Commissioner",
+  slogan: "Community First, Always",
+  heroImage: "/assets/headshot.jpg", // replace with your actual headshot file in /assets
+  accentColor: "#2b74a8",
+  primaryColor: "#1f5a3a",
+  bio: `Chris Sizemore is a dedicated public servant, U.S. Marine Corps veteran, and experienced community advocate running for County Commissioner District 2. With a career spanning military service, veteran representation, and local government leadership, Chris has helped thousands of families secure essential services, guided major community programs, and managed operations during emergencies. His background in public administration and hands-on work with veterans, first responders, and county services reflects his commitment to accountability, transparency, and strengthening Rabun County’s future.`,
+  issues: [
+    {title:"Transparency", desc:"Building trust by ensuring open communication and clear decision-making for Rabun County citizens."},
+    {title:"Accountability", desc:"Holding county leadership to the highest standards of responsibility and service."},
+    {title:"Economic Growth", desc:"Encouraging sustainable development and supporting local businesses to strengthen our community."}
+  ],
+  contactEmail: "Vote4Sizemore@gmail.com",
+  phone: "(706) 406-8407",
+  social: {
+    facebook: "https://facebook.com/yourpage",
+    twitter: "",
+    instagram: ""
+  },
+  donateLink: "",
+  eventsEmbed: ""
+};
+</script>
+
+<header id="site-hero" aria-label="Hero banner">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <h1 id="site-title"></h1>
+        <p class="lead" id="site-slogan"></p>
+        <p id="site-bio" class="muted"></p>
+        <div class="cta-row">
+          <a class="btn" id="cta-volunteer" href="#volunteer">Get Involved</a>
+          <a class="btn alt" id="cta-contact" href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="card" id="hero-photo-card" style="min-height:180px;display:flex;align-items:center;justify-content:center">
+        <img id="hero-img" alt="Chris Sizemore" style="max-width:100%;border-radius:10px;object-fit:cover;max-height:240px" src=""/>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <section id="about">
+    <div class="card">
+      <h2>Meet Chris</h2>
+      <p id="about-bio" class="muted"></p>
+    </div>
+  </section>
+
+  <section id="issues">
+    <h2>Priorities for District 2</h2>
+    <div class="issues" id="issues-list"></div>
+  </section>
+
+  <section id="volunteer">
+    <div class="card">
+      <h2>Get Involved</h2>
+      <p class="muted">Volunteer, host a conversation, or request a yard sign — every bit helps.</p>
+      <form id="vol-form" onsubmit="handleVolunteer(event)">
+        <label class="sr-only" for="v-name">Name</label>
+        <input id="v-name" placeholder="Your name" required />
+        <label class="sr-only" for="v-email">Email</label>
+        <input id="v-email" type="email" placeholder="Email" required />
+        <label class="sr-only" for="v-msg">Message</label>
+        <textarea id="v-msg" placeholder="How would you like to help? (e.g., volunteer, yard sign)" rows="3"></textarea>
+        <button type="submit">Submit</button>
+      </form>
+      <p class="muted" style="font-size:14px;margin-top:8px">Tip: Link this form to a Google Form and replace form action for easy responses.</p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="card">
+      <h2>Contact</h2>
+      <p class="muted">Email: <a id="contact-email" href="#"></a></p>
+      <p class="muted">Phone: <span id="contact-phone"></span></p>
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+        <a id="fb" class="btn" href="#" target="_blank">Facebook</a>
+        <a id="ig" class="btn alt" href="#" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="muted">© <span id="footer-year"></span> Chris Sizemore for District 2. Paid for by the Chris Sizemore Campaign. All rights reserved.</div>
+      <div class="muted">Rabun County, GA</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  root.style.setProperty('--primary', CONFIG.primaryColor);
+  root.style.setProperty('--accent', CONFIG.accentColor);
+  document.getElementById('site-title').textContent = CONFIG.name + ' — ' + CONFIG.role;
+  document.getElementById('site-slogan').textContent = CONFIG.slogan;
+  document.getElementById('site-bio').textContent = CONFIG.bio;
+  document.getElementById('about-bio').textContent = CONFIG.bio;
+  document.getElementById('hero-img').src = CONFIG.heroImage;
+  const issuesContainer = document.getElementById('issues-list');
+  CONFIG.issues.forEach(i=>{
+    const div = document.createElement('div');
+    div.className='issue';
+    div.innerHTML = `<h3>${i.title}</h3><p class=\"muted\">${i.desc}</p>`;
+    issuesContainer.appendChild(div);
+  });
+  const mail = document.getElementById('contact-email');
+  mail.href = 'mailto:'+CONFIG.contactEmail;
+  mail.textContent = CONFIG.contactEmail;
+  document.getElementById('contact-phone').textContent = CONFIG.phone;
+  document.getElementById('fb').href = CONFIG.social.facebook || '#';
+  document.getElementById('ig').href = CONFIG.social.instagram || '#';
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+})();
+
+function handleVolunteer(e){
+  e.preventDefault();
+  const name = document.getElementById('v-name').value.trim();
+  const email = document.getElementById('v-email').value.trim();
+  const msg = document.getElementById('v-msg').value.trim();
+  const subject = encodeURIComponent('Volunteer: ' + name);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+  window.location.href = `mailto:${CONFIG.contactEmail}?subject=${subject}&body=${body}`;
+}
+</script>
+
+</body>
+</html>
